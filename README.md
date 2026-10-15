@@ -36,3 +36,9 @@ You should see `winners: 1` and `PASS: token was single-use.`
 
 Open a Pull Request containing your `token-service.js`, `test.js`, and paste the
 test output (showing `winners: 1`) in the PR description. Submit the PR link.
+
+## Result
+
+Observed **winners: 1** — `npm test` fires 5 concurrent `consumeToken` calls via
+`Promise.all`, and atomic `GETDEL` lets exactly one succeed. (Sanity check: a
+two-step `GET` then `DEL` gave `winners: 5` under the same load.) Tested on Redis 8.10.2.
